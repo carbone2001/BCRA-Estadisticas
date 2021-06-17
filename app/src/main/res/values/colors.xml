@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#81d4fa</color>
+    <color name="plight">#b6ffff</color>
+    <color name="pdark">#4ba3c7</color>
+    <color name="secondary">#26c6da</color>
+    <color name="slight">#6ff9ff</color>
+    <color name="sdark">#0095a8</color>
+    <color name="light_gray">#ececec</color>
+    <color name="dark_gray">#B5B5B5</color>
+    <color name="light">#FFFFFF</color>
+
+    <!-- dark mode -->
+    <color name="dark_primary">#121212</color>
+    <color name="dark_plight">#4f83cc</color>
+<!--    <color name="dark_pdark">#002f6c</color>-->
+    <color name="dark_pdark">#ffffff</color>
+    <color name="dark_secondary">#006064</color>
+    <color name="dark_slight">#428e92</color>
+    <color name="dark_sdark">#00363a</color>
+
+</resources>

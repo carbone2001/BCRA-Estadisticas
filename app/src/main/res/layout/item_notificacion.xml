@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:orientation="horizontal"
+    android:backgroundTint="#D3D3D3"
+    android:gravity="center"
+    android:background="@drawable/boton_redondeado"
+    android:layout_marginTop="5dp">
+
+    <LinearLayout
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="DOLAR OFICIAL - LIMITE MAXIMO 204350377774"
+            android:textSize="16dp"
+            android:id="@+id/tvNombreNotificacion"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/dark_primary"
+            ></TextView>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:orientation="vertical"
+        android:layout_marginRight="5dp"
+        android:gravity="end"
+        android:layout_gravity="center_vertical">
+        <LinearLayout
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:backgroundTint="#AEAEAE"
+            android:background="@drawable/boton_redondeado"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="X"
+                android:id="@+id/btnEliminarNotificacion"
+                android:textSize="21dp"
+                android:layout_gravity="center"
+                android:textColor="#000000"
+                android:gravity="center"></TextView>
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

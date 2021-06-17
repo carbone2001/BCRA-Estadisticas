@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="15dp"
+    android:background="@drawable/item_estadistica"
+    android:layout_margin="10dp">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fecha: "
+            android:textSize="16dp">
+        </TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/tvFecha"
+            android:layout_height="wrap_content"
+            android:text="27-05-2021"
+            android:textSize="16dp">
+        </TextView>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="end">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Valor actual: $"
+            android:textSize="16dp"
+            android:layout_gravity="end"
+            android:layout_marginLeft="35dp">
+        </TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvValor"
+            android:text="102847"
+            android:textSize="16dp"
+            android:gravity="end"
+            android:layout_gravity="end">
+        </TextView>
+    </LinearLayout>
+</LinearLayout>

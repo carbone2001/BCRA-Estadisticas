@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+<!--    <item android:title="refrescar" android:icon="@android:drawable/stat_notify_sync" android:id="@+id/btnRefrescar" app:showAsAction="always"></item>-->
+    <item android:title="Calculadora" android:id="@+id/btnCalculadora"></item>
+    <item android:title="Notificaciones" android:id="@+id/btnNotificaciones"></item>
+<!--    <item-->
+<!--        android:id="@+id/buscadorEstadistica"-->
+<!--        android:icon="@drawable/ic_search_black_24dp"-->
+<!--        android:title="Search"-->
+<!--        app:showAsAction="always"-->
+<!--        app:actionViewClass="android.widget.SearchView" />-->
+</menu>
