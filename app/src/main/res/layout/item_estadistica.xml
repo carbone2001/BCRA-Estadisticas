@@ -14,6 +14,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Fecha: "
+            android:textColor="?attr/colorPrimaryDark"
             android:textSize="16dp">
         </TextView>
         <TextView
@@ -21,6 +22,7 @@
             android:id="@+id/tvFecha"
             android:layout_height="wrap_content"
             android:text="27-05-2021"
+            android:textColor="?attr/colorPrimaryDark"
             android:textSize="16dp">
         </TextView>
     </LinearLayout>
@@ -34,6 +36,7 @@
             android:layout_height="wrap_content"
             android:text="Valor actual: $"
             android:textSize="16dp"
+            android:textColor="?attr/colorPrimaryDark"
             android:layout_gravity="end"
             android:layout_marginLeft="35dp">
         </TextView>
@@ -42,6 +45,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/tvValor"
             android:text="102847"
+            android:textColor="?attr/colorPrimaryDark"
             android:textSize="16dp"
             android:gravity="end"
             android:layout_gravity="end">

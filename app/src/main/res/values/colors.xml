@@ -1,22 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#81d4fa</color>
-    <color name="plight">#b6ffff</color>
-    <color name="pdark">#4ba3c7</color>
-    <color name="secondary">#26c6da</color>
-    <color name="slight">#6ff9ff</color>
-    <color name="sdark">#0095a8</color>
-    <color name="light_gray">#ececec</color>
-    <color name="dark_gray">#B5B5B5</color>
-    <color name="light">#FFFFFF</color>
+    <color name="primary">#212121</color>
+    <color name="light_gray">#EDEDED</color>
+    <color name="medium_gray">#D3D3D3</color>
+    <color name="dark_gray">#7E7E7E</color>
+    <color name="dark">#000000</color>
+    <color name="light">#ffffff</color>
 
     <!-- dark mode -->
-    <color name="dark_primary">#121212</color>
-    <color name="dark_plight">#4f83cc</color>
-<!--    <color name="dark_pdark">#002f6c</color>-->
-    <color name="dark_pdark">#ffffff</color>
-    <color name="dark_secondary">#006064</color>
-    <color name="dark_slight">#428e92</color>
-    <color name="dark_sdark">#00363a</color>
+    <color name="darkmode_primary">#515151</color>
+    <color name="darkmode_light_gray">#3C3C3C</color>
+    <color name="darkmode_medium_gray">#555555</color>
+    <color name="darkmode_dark_gray">#AAAAAA</color>
+    <color name="darkmode_dark">#ffffff</color>
+    <color name="darkmode_light">#000000</color>000000
 
 </resources>

@@ -2,15 +2,12 @@
     <!-- Base application theme. -->
     <style name="Theme.BCRAEstadisticas" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/dark_primary</item>
-        <item name="colorPrimaryVariant">@color/dark_plight</item>
-        <item name="colorOnPrimary">@color/dark_pdark</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/dark_secondary</item>
-        <item name="colorSecondaryVariant">@color/dark_slight</item>
-        <item name="colorOnSecondary">@color/dark_sdark</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
-        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/darkmode_primary</item>
+        <item name="colorSecondary">@color/darkmode_light_gray</item>
+        <item name="colorSecondaryVariant">@color/darkmode_medium_gray</item>
+        <item name="colorPrimaryDark">@color/darkmode_dark_gray</item>
+        <item name="tabTextColor">@color/darkmode_dark</item>
+        <item name="contrast">@color/darkmode_light</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/contrast</item>
     </style>
 </resources>

@@ -20,19 +20,18 @@ import java.util.List;
 
 public class ConexionAPI {
     final private static String urlBase = "https://api.estadisticasbcra.com/";
-    final private static String bearerToken = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NTI2MzM5NjcsInR5cGUiOiJleHRlcm5hbCIsInVzZXIiOiJiZW1peDQ2MjA1QGxhYmVieC5jb20ifQ.i_hO1GmqTtD_cb06aGXkv2emL32ZjdLikPeM7J57OD_BEjqpEfjCI9fikt1sYwvzC5gKisVyEn4g_wdvw4gYFA";
+    //final private static String bearerToken = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NTI2MzM5NjcsInR5cGUiOiJleHRlcm5hbCIsInVzZXIiOiJiZW1peDQ2MjA1QGxhYmVieC5jb20ifQ.i_hO1GmqTtD_cb06aGXkv2emL32ZjdLikPeM7J57OD_BEjqpEfjCI9fikt1sYwvzC5gKisVyEn4g_wdvw4gYFA";
+    final private static String bearerToken = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NTU3NjUyMDIsInR5cGUiOiJleHRlcm5hbCIsInVzZXIiOiJhc2QzM3dAYXNkdy5jb20ifQ.m0ObNbGDQuVlXDwb4fizy8SM4bbeuoQA-CgwbK4t7LPVDETPB-b0AQyW9HKDdmylVpkF15p508LxafBdqNMdug";
     public static List<Estadistica> obtenerEstadisticas(String urlEstadistica){
         List<Estadistica> listaEstadisticas = new ArrayList<>();
-        Log.d("Se ha enviado una peticion a la API","Cuidado que no es infinita");
         try {
-            //"usd_of"
             URL url = new URL(urlBase.concat(urlEstadistica));
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");//Get es el valor por defecto
             urlConnection.setRequestProperty("Authorization","Bearer "+bearerToken);
             urlConnection.connect();
             int respuesta = urlConnection.getResponseCode();
-            Log.d("Conexion","Respuesta del servidor: "+respuesta);
+            //Log.d("Conexion","Respuesta del servidor: "+respuesta);
             if(respuesta == 200){
                 InputStream is = urlConnection.getInputStream();
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();

@@ -22,7 +22,8 @@ public class OnClickEliminarNotificacion implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        Notificacion.eliminarNotificacion(this.activity,notificaionId);
+        Notificacion.eliminarNotificacionDeLista(this.activity,notificaionId);
+        Notificacion.cancelarNotificacion(this.activity,notificaionId);
         this.activity.refrescarLista();
     }
 }

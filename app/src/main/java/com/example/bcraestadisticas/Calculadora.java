@@ -49,11 +49,6 @@ public class Calculadora extends AppCompatActivity implements View.OnClickListen
             String divisa1 = spinner1.getSelectedItem().toString();
             String divisa2 = spinner2.getSelectedItem().toString();
 
-            if(divisa1 == divisa2)
-            {
-
-            }
-
             if(divisa1 == Estadistica.DOLAR_OFICIAL){
                 valorDivisa1 = Estadistica.getUltimoValorDeUnaEstadistica(Estadistica.DOLAR_OFICIAL)*valor;
             }

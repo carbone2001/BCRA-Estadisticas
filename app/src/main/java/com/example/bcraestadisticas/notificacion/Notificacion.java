@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import androidx.core.app.NotificationCompat;
 
 import com.example.bcraestadisticas.MainActivity;
+import com.example.bcraestadisticas.NotificacionService;
 import com.example.bcraestadisticas.Notificaciones;
 import com.example.bcraestadisticas.R;
 
@@ -35,53 +37,22 @@ public class Notificacion implements Serializable {
     private NotificationCompat.Builder mBuilder;
     private String nombreNotificacion;
     private Boolean emitida;
+    private String tipoLimite;
+    private String divisa;
+    private double limiteNumerico;
 
-    public Notificacion(Notificaciones activityOrigen, Class<MainActivity> activityDestino,String titulo,String mensaje,String nombreNotificacion){
+    public Notificacion(Notificaciones activityOrigen, Class<MainActivity> activityDestino,String tipoLimite,String divisa,double limiteNumerico){
         this.activityOrigen = activityOrigen;
         this.activityDestino = activityDestino;
-        this.titulo = titulo;
-        this.mensaje = mensaje;
-        this.nombreNotificacion = nombreNotificacion;
+
+        Log.d("TIPO LIMITE --------------",tipoLimite);
+        this.titulo = "".concat("Se ha superado el limite ").concat(tipoLimite);
+        this.mensaje = "".concat("El valor de " + divisa + " ha superado el limite de $" + limiteNumerico);
+        this.nombreNotificacion = divisa.concat(" - Limite ").concat(tipoLimite).concat(": $").concat(Double.toString(limiteNumerico));
+        this.tipoLimite = tipoLimite;
+        this.divisa = divisa;
+        this.limiteNumerico = limiteNumerico;
         this.emitida = false;
-        Boolean coincidencias = false;
-        for(int i=0;i<Notificacion.listaNotificaciones.length();i++){
-            JSONObject current = null;
-            try {
-                current = Notificacion.listaNotificaciones.getJSONObject(i);
-                if(current.getInt("id") == this.hashCode()){
-                    coincidencias = true;
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-        if(coincidencias == false){
-            this.mBuilder = new NotificationCompat.Builder(this.activityOrigen.getApplicationContext(), "notificacionLimites");
-            Intent intent = new Intent(this.activityOrigen.getApplicationContext(), this.activityDestino);
-            intent.putExtra("nombreNotificacion",this.nombreNotificacion);
-            PendingIntent pendingIntent = PendingIntent.getActivity(this.activityOrigen.getApplicationContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-            NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
-            bigText.bigText(this.mensaje);
-            bigText.setBigContentTitle(this.titulo);
-            bigText.setSummaryText("Alerta de Limites");
-
-            mBuilder.setContentIntent(pendingIntent);
-            //mBuilder.setSmallIcon(R.mipmap.ic_launcher);
-            mBuilder.setSmallIcon(R.drawable.ic_launcher_foreground);
-            mBuilder.setContentTitle(titulo);
-            mBuilder.setContentText(mensaje);
-            //mBuilder.setPriority(Notification.PRIORITY_HIGH);
-            mBuilder.setStyle(bigText);
-            mBuilder.setAutoCancel(true);
-            mNotificationManager = (NotificationManager) this.activityOrigen.getSystemService(Context.NOTIFICATION_SERVICE);
-            this.guardarNotificacion();
-            Toast.makeText(this.activityOrigen,"Se ha creado una nueva notificación",Toast.LENGTH_SHORT).show();
-        }
-        else{
-            Toast.makeText(this.activityOrigen,"Ya existe una notificación con esas características",Toast.LENGTH_SHORT).show();
-        }
     }
 
     public void enviarNotificacion(){
@@ -106,35 +77,56 @@ public class Notificacion implements Serializable {
         return statusBarNotifications;
     }
 
-    private void guardarNotificacion(){
-        Notificacion.listaNotificaciones.put(this.toJSON());
-        this.guardarListaNotificaciones(this.activityOrigen);
-        this.activityOrigen.refrescarLista();
-    }
-
-    public static JSONArray obtenerNotificacionesGuardadas(Activity activity){
-        if(Notificacion.listaNotificaciones == null){
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
-            String jsonArrayString = prefs.getString("notificaciones",(new JSONObject()).toString());
-            Log.d("String shared preference----------------------------------------------------------------",jsonArrayString);
-            JSONObject objectMain = null;
-            JSONArray jsonArray = null;
+    public static boolean guardarNotificacion(Context context,Notificacion notificacion){
+        Boolean coincidencias = false;
+        for(int i=0;i<Notificacion.listaNotificaciones.length();i++){
+            JSONObject current = null;
             try {
-                objectMain = new JSONObject(jsonArrayString);
-                jsonArray = objectMain.getJSONArray("notificaciones");
-
+                current = Notificacion.listaNotificaciones.getJSONObject(i);
+                if(current.getInt("id") == notificacion.hashCode()){
+                    coincidencias = true;
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            Notificacion.listaNotificaciones = jsonArray;
         }
+
+        if(!coincidencias){
+            Notificacion.listaNotificaciones.put(notificacion.toJSON());
+            guardarListaNotificaciones(context);
+            if(context.getClass() == Notificaciones.class){
+                ((Notificaciones)context).refrescarLista();
+            }
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
+
+    public static JSONArray obtenerNotificacionesGuardadas(Context context){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String jsonArrayString = prefs.getString("notificaciones",(new JSONObject()).toString());
+        JSONObject objectMain = null;
+        JSONArray jsonArray = null;
+        try {
+            objectMain = new JSONObject(jsonArrayString);
+            jsonArray = objectMain.getJSONArray("notificaciones");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if(jsonArray == null){
+            jsonArray = new JSONArray();
+        }
+        Notificacion.listaNotificaciones = jsonArray;
         return Notificacion.listaNotificaciones;
     }
 
 
-    public static void eliminarNotificacion(Activity activity,int id){
-        NotificationManager notificationManager = (NotificationManager)activity.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancel(id);
+    public static void eliminarNotificacionDeLista(Context context,int id){
+        cancelarNotificacion(context,id);
         try {
             for(int i=0; i<Notificacion.listaNotificaciones.length();i++){
                 JSONObject current = Notificacion.listaNotificaciones.getJSONObject(i);
@@ -146,9 +138,14 @@ public class Notificacion implements Serializable {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Notificacion.guardarListaNotificaciones(activity);
-        Toast.makeText(activity,"La notificacion ha sido eliminada",Toast.LENGTH_SHORT).show();
+        Notificacion.guardarListaNotificaciones(context);
     }
+
+    public static void cancelarNotificacion(Context context,int id){
+        NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(id);
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -160,14 +157,19 @@ public class Notificacion implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(nombreNotificacion);
+        Long longNumber = new Long(Math.round(Math.pow(Objects.hash(nombreNotificacion),2)));
+        return longNumber.intValue();
     }
 
     public JSONObject toJSON(){
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("nombre",this.nombreNotificacion);
+            jsonObject.put("divisa",this.divisa);
             jsonObject.put("id",this.hashCode());
+            jsonObject.put("limite",this.limiteNumerico);
+            jsonObject.put("tipoLimite",this.tipoLimite);
+            jsonObject.put("emitida",this.emitida);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -175,7 +177,7 @@ public class Notificacion implements Serializable {
     }
 
 
-    private static void guardarListaNotificaciones(Activity activity){
+    private static void guardarListaNotificaciones(Context activity){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
         SharedPreferences.Editor editor = prefs.edit();
         JSONObject jsonObject = new JSONObject();
@@ -189,31 +191,22 @@ public class Notificacion implements Serializable {
     }
 
 
-    private static JSONArray getListaNotificaciones() {
-        return listaNotificaciones;
-    }
+    public static void registrarNotificacionEmitida(Context context, int id){
 
-    public static void setListaNotificaciones(JSONArray listaNotificaciones) {
-        Notificacion.listaNotificaciones = listaNotificaciones;
-    }
-
-    public String getNombreNotificacion() {
-        return nombreNotificacion;
-    }
-
-    public Boolean notificacionVigente(){
-        Boolean existeEnLaLista = false;
         for(int i=0;i<Notificacion.listaNotificaciones.length();i++){
             JSONObject current = null;
             try {
                 current = Notificacion.listaNotificaciones.getJSONObject(i);
-                if(current.getInt("id") == this.hashCode()){
-                    existeEnLaLista = true;
+                if(current.getInt("id") == id){
+                    current.put("emitida",true);
+                    Notificacion.listaNotificaciones.remove(i);
+                    Notificacion.listaNotificaciones.put(current);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
-        return (existeEnLaLista && !emitida);
+        guardarListaNotificaciones(context);
     }
+
 }

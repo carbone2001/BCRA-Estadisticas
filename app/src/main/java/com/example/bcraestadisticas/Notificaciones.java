@@ -6,13 +6,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.bcraestadisticas.estadistica.Estadistica;
 import com.example.bcraestadisticas.estadistica.EstadisticaAdapter;
@@ -26,6 +29,9 @@ public class Notificaciones extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Notificacion.obtenerNotificacionesGuardadas(this);
+
         setContentView(R.layout.activity_notificaciones);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Notificaciones");
@@ -45,8 +51,8 @@ public class Notificaciones extends AppCompatActivity implements View.OnClickLis
         Button btnCrearNotificacion = findViewById(R.id.btnCrearNotificacion);
         btnCrearNotificacion.setOnClickListener(this);
 
-
         this.refrescarLista();
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         rvNotificaciones.setLayoutManager(linearLayoutManager);
@@ -78,22 +84,16 @@ public class Notificaciones extends AppCompatActivity implements View.OnClickLis
             String tipoLimite = spinnerTipoLimite.getSelectedItem().toString();
             String divisa = spinnerDivisa.getSelectedItem().toString();
             String limiteNumerico = inputLimite.getText().toString();
-            String titulo = "";
-            String mensaje = "";
-            String nombreNotificacion;
-            titulo = titulo.concat("Se ha superado el limite " + tipoLimite);
-            mensaje = mensaje.concat("El valor de " + divisa + " ha superado el limite de $" + limiteNumerico);
-            nombreNotificacion = divisa.concat(" - Limite ").concat(tipoLimite).concat(": $").concat(limiteNumerico);
-            Notificacion notificacion = new Notificacion(this, MainActivity.class, titulo, mensaje,nombreNotificacion);
-            HiloNotificacion hiloNotificacion = new HiloNotificacion(
-                    notificacion,
-                    spinnerDivisa.getSelectedItem().toString(),
-                    spinnerTipoLimite.getSelectedItem().toString(),
-                    Double.parseDouble(inputLimite.getText().toString().isEmpty() ? "0" : inputLimite.getText().toString()));
-            hiloNotificacion.start();
+
+            Notificacion notificacion = new Notificacion(this, MainActivity.class,tipoLimite,divisa,Double.parseDouble(limiteNumerico));
+            boolean resultado = Notificacion.guardarNotificacion(this,notificacion);
+            if(resultado == true){
+                Toast.makeText(this,"Se ha creado una nueva notificación",Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(this,"No se ha podido agregar la notificacion. Verifique que no exista otra igual.",Toast.LENGTH_LONG).show();
+            }
         }
-
-
     }
 
 
