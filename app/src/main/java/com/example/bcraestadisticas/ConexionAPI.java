@@ -53,7 +53,6 @@ public class ConexionAPI {
                 throw new RuntimeException("Error en la conexion con el servidor: "+respuesta);
             }
         } catch (MalformedURLException e) {
-            //Log.d("Mensaje de error","MalformedURLException")
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();

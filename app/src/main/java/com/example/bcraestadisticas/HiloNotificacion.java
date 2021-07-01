@@ -32,16 +32,6 @@ public class HiloNotificacion extends Thread {
     private NotificationManager mNotificationManager;
     private NotificationCompat.Builder mBuilder;
     NotificacionService service;
-//    private Notificacion notification;
-//    private String divisa;
-//    private String tipoLimite;
-//    private double limite;
-//    public HiloNotificacion(Notificacion notificacion,String divisa,String tipoLimite,double limite){
-//        this.notification = notificacion;
-//        this.divisa = divisa;
-//        this.tipoLimite = tipoLimite;
-//        this.limite = limite;
-//    }
 
     public HiloNotificacion(NotificacionService service){
         this.service = service;
@@ -54,12 +44,11 @@ public class HiloNotificacion extends Thread {
             while (true){
                 this.enviarNotificacionesPendientes();
                 Thread.sleep(21600000);//6hs
-                //Thread.sleep(5000);
+                //Thread.sleep(15000);
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        //super.run();
     }
 
     private void enviarNotificacionesPendientes(){
